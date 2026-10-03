@@ -1,0 +1,40 @@
+# Arcane Docker Compose Configuration
+
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/arcane.svg
+  urls:
+    - https://getarcane.app/
+    - https://github.com/getarcaneapp/arcane
+
+services:
+  arcane:
+    image: quay.io/getarcaneapp/manager:latest
+    container_name: arcane
+    ports:
+      - '3552:3552'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - arcane-data:/app/data
+    environment:
+      TZ: ${TZ:+UTC}
+      APP_URL: ${APP_URL:-http://localhost:3552}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      LOG_JSON: ${LOG_JSON:-false}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY:?required}
+      ANALYTICS_DISABLED: ${ANALYTICS_DISABLED:-true}
+    cgroup: host
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      - "checkin.getarcane.app:127.0.0.1" # disable telemetry
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500m"
+        max-file: "2"
+    labels:
+      com.getarcaneapp.arcane.icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/arcane.svg
+      com.getarcaneapp.arcane.hidden: "true"
+
+volumes:
+  arcane-data:

@@ -1,0 +1,8 @@
+# If enterpriseEdition is enabled, then use the values below _instead_ of those in .image
+enterpriseEdition: 
+  enabled: true
+  tag: lts
+
+tls:
+  # If set, Portainer will be configured to use TLS only
+  force: true

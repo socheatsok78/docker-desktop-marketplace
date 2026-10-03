@@ -1,0 +1,8 @@
+services:
+  arcane:
+    image: quay.io/getarcaneapp/manager:latest
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "500m"
+        max-file: "2"

@@ -1,0 +1,7 @@
+image:
+  repository: portainer/portainer-ce
+  tag: lts
+
+tls:
+  # If set, Portainer will be configured to use TLS only
+  force: true
